@@ -246,7 +246,7 @@ export class InternService {
       data: {
         interviewStatus: InterviewStatus.Done,
         interviewSlot: {
-          update: { answers: data.answers, score: data.score },
+          update: { score: data.score },
         },
       },
     });

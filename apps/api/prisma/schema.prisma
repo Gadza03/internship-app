@@ -131,11 +131,12 @@ model InterviewAnswer {
 model InterviewQuestion {
   id               String             @id @default(uuid())
   question         String
-  questionType     QuestionType
-  questionCategory QuestionCategory
+  type             QuestionType
+  category         QuestionCategory
   minValue         Int?
   maxValue         Int?
   stepValue        Int?               @default(1)
+  isEnabled        Boolean            @default(true) 
   questionOptions  QuestionOption[]
   interviewAnswers InterviewAnswer[]
 }

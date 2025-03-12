@@ -67,7 +67,6 @@ export class InterviewSlotService {
             data: {
               start: slotStart,
               end: slotEnd,
-              answers: {},
             },
           });
 
