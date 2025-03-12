@@ -109,11 +109,64 @@ model InterviewSlot {
   internId     String?                        @unique
   start        DateTime
   end          DateTime
-  answers      Json
   score        Int?
   createdAt    DateTime                       @default(now())
   updatedAt    DateTime                       @updatedAt
   interviewers InterviewMemberParticipation[]
+  interviewAnswers InterviewAnswer[]
+}
+
+model InterviewAnswer {
+  id             String          @id @default(uuid())
+  interviewSlot  InterviewSlot   @relation(fields: [interviewSlotId], references: [id], onDelete: Cascade)
+  interviewSlotId String
+  question       InterviewQuestion @relation(fields: [questionId], references: [id], onDelete: Cascade)
+  questionId     String
+  answer         String
+  flagged        Boolean          @default(false)
+  createdAt      DateTime         @default(now())
+  updatedAt      DateTime         @updatedAt
+}
+
+model InterviewQuestion {
+  id               String             @id @default(uuid())
+  question         String
+  questionType     QuestionType
+  questionCategory QuestionCategory
+  minValue         Int?
+  maxValue         Int?
+  stepValue        Int?               @default(1)
+  questionOptions  QuestionOption[]
+  interviewAnswers InterviewAnswer[]
+}
+
+model QuestionOption {
+   id                String            @id @default(uuid())
+   questionId        String
+   value             String
+   InterviewQuestion InterviewQuestion @relation(fields: [questionId], references: [id], onDelete: Cascade)
+}
+
+enum QuestionType {
+  Field
+  TextArea
+  Select
+  Slider
+  Checkbox
+  Date
+  DateTime
+  Radio
+  Number
+}
+
+enum QuestionCategory {
+  General
+  Personal
+  Development
+  Design
+  Marketing
+  Multimedia
+  Final
 }
 
 model InterviewMemberParticipation {
